@@ -1,0 +1,14 @@
+#cloud-config
+users:
+  - name: leopold
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+package_upgrade: true
+packages:
+  - git
+  - docker.io
+runcmd:
+  - wget https://raw.githubusercontent.com/Flyimg/DigitalOcean-provision/master/provision-flyimg-on-ubuntu.sh
+  - chmod 700 provision-flyimg-on-ubuntu.sh && ./provision-flyimg-on-ubuntu.sh
+  
