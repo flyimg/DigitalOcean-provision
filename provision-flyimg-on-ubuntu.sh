@@ -41,7 +41,7 @@ sudo usermod -aG docker $nixusr
 # We clone the flyimg repo into the user's folder.
 echo "cloning flyimg into"
 pwd
-sudo -HEu $nixusr git clone https://github.com/sadok-f/flyimg.git /home/$nixusr/flyimg
+sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/flyimg
 
 # List the repo's content to comfirm it's there.
 cd flyimg
