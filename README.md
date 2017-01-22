@@ -12,4 +12,6 @@ If you want to see the provisioning script in action you can SSH into the Droppl
 tail -f /var/log/cloud-init-output.log
 ```
 
+There's deeper a tutorial on how to setup the droplet at: http://code.medula.cl/article_Fly-image-microserver-with-Docker-on-Digitalocean.html
+
 ... more info to come.
