@@ -39,14 +39,29 @@ echo "You can now login with the user: $nixusr"
 sudo usermod -aG docker $nixusr
 
 # We clone the flyimg repo into the user's folder.
-echo "cloning flyimg into"
-pwd
+echo "cloning flyimg into " $(pwd)
 sudo -HEu $nixusr git clone https://github.com/flyimg/flyimg.git /home/$nixusr/flyimg
 
 # List the repo's content to comfirm it's there.
 cd flyimg
 echo "...cloned! content is:"
 ls -la
+
+# if we have the whitelist_domains.txt add the domains and activate the restriction
+if [-r ../whitelist_domains.txt]; then
+    sudo -u $nixusr ../whitelist_domains.txt whitelist_domains.txt
+    echo 'activating domain restriction'
+    # activate the restricted domains config
+    sudo -u $nixusr sed -i -e 's/restricted_domains: false/restricted_domains: true/' config/parameters.yml
+    # remove the dummy domains
+    sudo -u $nixusr sed -i -e '/www.domain-/d' config/parameters.yml
+    # prepend yaml list format to the whitelist_domains.txt
+    sudo -u $nixusr sed -i -e 's/^/    - /' whitelist_domains.txt
+    echo 'setting whitelisted domains'
+    cat whitelist_domains.txt
+    # insert the domains into the config file
+    sudo -u $nixusr sed -i '/whitelist_domains:/ r domains.txt' config/parameters.yml
+fi
 
 # Build the docker container
 echo "sudo -u $nixusr docker build -t flyimg ."
