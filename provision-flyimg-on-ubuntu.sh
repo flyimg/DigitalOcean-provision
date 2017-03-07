@@ -48,8 +48,9 @@ echo "...cloned! content is:"
 ls -la
 
 # if we have the whitelist_domains.txt add the domains and activate the restriction
-if [-r ../whitelist_domains.txt]; then
-    sudo -u $nixusr ../whitelist_domains.txt whitelist_domains.txt
+if [ -r /var/whitelist_domains.txt ]; then
+    mv /var/whitelist_domains.txt whitelist_domains.txt
+    chown -R $nixusr:$nixusr whitelist_domains.txt
     echo 'activating domain restriction'
     # activate the restricted domains config
     sudo -u $nixusr sed -i -e 's/restricted_domains: false/restricted_domains: true/' config/parameters.yml
@@ -60,7 +61,7 @@ if [-r ../whitelist_domains.txt]; then
     echo 'setting whitelisted domains'
     cat whitelist_domains.txt
     # insert the domains into the config file
-    sudo -u $nixusr sed -i '/whitelist_domains:/ r domains.txt' config/parameters.yml
+    sudo -u $nixusr sed -i '/whitelist_domains:/ r whitelist_domains.txt' config/parameters.yml
 fi
 
 # Build the docker container
