@@ -8,6 +8,12 @@ package_upgrade: true
 packages:
   - git
   - docker.io
+# Uncomment these lines below to activate the domain restrictions and allow only whitelisted domains.
+#write_files:
+#  - path: /var/whitelist_domains.txt
+#    content: |
+#      mozilla.org
+#      medula.cl
 runcmd:
   - wget https://raw.githubusercontent.com/Flyimg/DigitalOcean-provision/master/provision-flyimg-on-ubuntu.sh
   - chmod 700 provision-flyimg-on-ubuntu.sh && ./provision-flyimg-on-ubuntu.sh
